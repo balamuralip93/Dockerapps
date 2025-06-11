@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM 506035479554.dkr.ecr.us-east-2.amazonaws.com/caas-base-images-gamma:python-3.11-slim-0.0.2
+FROM python:3.9-slim
 
 WORKDIR /app
 
