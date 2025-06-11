@@ -10,6 +10,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
+  imageName: 'myappimage'
 
 stages:
 - stage: Build
@@ -23,7 +24,10 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
-        tags: |
-          $(tag)
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(imageName):$(Build.BuildId)'
+    - script: docker save $(imageName):$(Build.Buildid) -o $(Build.ArtifactstagingDirectory)/$(imageName).tar
+      displayName: Save Docker Image to tar
+    - publish: $(Build.ArtifactstagingDirectory)/$(imageName).tar
+      artifact: dockerimagetarfile
