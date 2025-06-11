@@ -26,8 +26,10 @@ stages:
       inputs:
         command: 'build'
         Dockerfile: '**/Dockerfile'
-        tags: '$(imageName):$(Build.BuildId)'
-    - script: docker save $(imageName):$(Build.Buildid) -o $(Build.ArtifactstagingDirectory)/$(imageName).tar
+        tags: |
+         '$(imageName):$(Build.BuildId)'
+    - script: |
+        docker save $(imageName):$(Build.BuildId) -o $(Build.ArtifactStagingDirectory)/$(imageName).tar
       displayName: Save Docker Image to tar
-    - publish: $(Build.ArtifactstagingDirectory)/$(imageName).tar
+    - publish: $(Build.ArtifactStagingDirectory)/$(imageName).tar
       artifact: dockerimagetarfile
