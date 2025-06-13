@@ -28,6 +28,11 @@ stages:
         Dockerfile: '**/Dockerfile'
         tags: |
           $(imageName):$(Build.BuildId)
+
+    - script: |
+        echo "Building Docker image"
+        docker build -t $(imageName):$(Build.BuildId) .
+      displayName: Build Docker Image      
     - script: |
         echo "Listing Docker Images"
         docker images
